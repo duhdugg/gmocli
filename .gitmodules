@@ -1,0 +1,6 @@
+[submodule "gitmoji"]
+	path = gitmoji
+	url = https://github.com/carloscuesta/gitmoji.git
+[submodule "unicode-emoji-json"]
+	path = unicode-emoji-json
+	url = https://github.com/muan/unicode-emoji-json.git
