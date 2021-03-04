@@ -18,15 +18,17 @@ const unicodeEmojiPath = path.join(
   'unicode-emoji-json',
   'data-by-emoji.json'
 )
-const emojiData = require(unicodeEmojiPath)
-const emojis = Object.keys(emojiData)
+const unicodeEmojiData = require(unicodeEmojiPath)
+const emojis = Object.keys(unicodeEmojiData)
+const emojiData = {}
 
 for (const emoji of emojis) {
+  emojiData[emoji] = {
+    name: unicodeEmojiData[emoji].name
+  }
   for (const gitmoji of gitmojis) {
     if (emoji === gitmoji.emoji) {
       Object.assign(emojiData[emoji], {
-        gitmojiName: gitmoji.name,
-        gitmojiCode: gitmoji.code,
         gitmojiDesc: gitmoji.description
       })
     }
@@ -38,23 +40,23 @@ function printHelp() {
     `Usage:\tgitmocli [OPTIONS] <search>`,
     '',
     'OPTIONS:',
-    '-h \t print this help',
-    '-l \t list all emojis',
-    '-d \t include data',
-    '-1 \t output the first result only'
+    '-h | --help \t print this help',
+    '-l | --list \t list all emojis',
+    '-i | --info \t include info',
+    '-n | --name \t match name exactly'
   ]
   console.log(lines.join('\n'))
 }
 
-function printList(withData = false) {
+function printList(withInfo = false) {
   const lines = []
   for (const emoji of emojis) {
-    printEmoji(emoji, withData)
+    printEmoji(emoji, withInfo)
   }
 }
 
-function printEmoji(emoji, withData = false) {
-  if (withData) {
+function printEmoji(emoji, withInfo = false) {
+  if (withInfo) {
     const data = emojiData[emoji]
     console.log(
       emoji,
@@ -67,6 +69,9 @@ function printEmoji(emoji, withData = false) {
 
 function searchEmojis(searchKeys) {
   const matches = []
+  if (!searchKeys.length) {
+    return matches
+  }
   for (let emoji of emojis) {
     const data = emojiData[emoji]
     let match = true
@@ -75,24 +80,6 @@ function searchEmojis(searchKeys) {
       if (!data.name.toLowerCase().includes(searchKey.toLowerCase())) {
         match = false
         break
-      }
-    }
-    if (!match && data.gitmojiName) {
-      match = true
-      for (let searchKey of searchKeys) {
-        if (!data.gitmojiName.toLowerCase().includes(searchKey.toLowerCase())) {
-          match = false
-          break
-        }
-      }
-    }
-    if (!match && data.gitmojiCode) {
-      match = true
-      for (let searchKey of searchKeys) {
-        if (!data.gitmojiCode.toLowerCase().includes(searchKey.toLowerCase())) {
-          match = false
-          break
-        }
       }
     }
     if (!match && data.gitmojiDesc) {
@@ -111,27 +98,65 @@ function searchEmojis(searchKeys) {
   return matches
 }
 
-if (process.argv.length < 3) {
+function getEmojiByName(name) {
+  let match
+  for (let emoji of emojis) {
+    const data = emojiData[emoji]
+    if (data.name === name) {
+      match = emoji
+      break
+    }
+  }
+  return match
+}
+
+const args = process.argv
+if (args.length < 3) {
   printHelp()
 } else {
-  const helpFlag = process.argv.includes('-h')
-  const listFlag = process.argv.includes('-l')
-  const dataFlag = process.argv.includes('-d')
-  const snglFlag = process.argv.includes('-1')
+  let helpFlag = args.includes('-h') || args.includes('--help')
+  let listFlag = args.includes('-l') || args.includes('--list')
+  let infoFlag = args.includes('-i') || args.includes('--info')
+  let nameFlag = args.includes('-n') || args.includes('--name')
+  for (let arg of args) {
+    if (arg[0] === '-' && arg[1] !== '-') {
+      if (arg.includes('h')) {
+        helpFlag = true
+      }
+      if (arg.includes('l')) {
+        listFlag = true
+      }
+      if (arg.includes('i')) {
+        infoFlag = true
+      }
+      if (arg.includes('n')) {
+        nameFlag = true
+      }
+    }
+  }
   if (helpFlag) {
     printHelp()
   }
   if (listFlag) {
-    printList(dataFlag)
+    printList(infoFlag)
   }
+  const searchKeys = args.slice(2).filter((arg) => !arg.match(/^-/))
 
-  const searchKeys = process.argv
-    .slice(2)
-    .filter((arg) => !['-h', '-l', '-d', '-1'].includes(arg))
-  for (let emoji of searchEmojis(searchKeys)) {
-    printEmoji(emoji, dataFlag)
-    if (snglFlag) {
-      break
+  if (nameFlag) {
+    const match = getEmojiByName(searchKeys.join(' '))
+    if (match !== undefined) {
+      printEmoji(match, infoFlag)
+    } else {
+      process.exit(1)
+    }
+  } else {
+    const matches = searchEmojis(searchKeys)
+    if (matches.length) {
+      for (let emoji of matches) {
+        printEmoji(emoji, infoFlag)
+      }
+    } else {
+      process.exit(1)
     }
   }
 }
