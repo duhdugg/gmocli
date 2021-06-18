@@ -60,7 +60,7 @@ function printEmoji(emoji, withInfo = false) {
     const data = emojiData[emoji]
     console.log(
       emoji,
-      util.inspect(data, { breakLength: Infinity, colors: true })
+      `${data.name}${data.gitmojiDesc ? ' / ' + data.gitmojiDesc : ''}`
     )
   } else {
     process.stdout.write(emoji)
