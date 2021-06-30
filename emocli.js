@@ -29,7 +29,7 @@ for (const emoji of emojis) {
   for (const gitmoji of gitmojis) {
     if (emoji === gitmoji.emoji) {
       Object.assign(emojiData[emoji], {
-        gitmojiDesc: gitmoji.description
+        gitmojiDesc: gitmoji.description.toLowerCase()
       })
     }
   }
