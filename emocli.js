@@ -2,22 +2,9 @@
 
 const path = require('path')
 const util = require('util')
+const { gitmojis } = require('gitmojis/src/data/gitmojis.json')
+const unicodeEmojiData = require('unicode-emoji-json/data-by-emoji.json')
 
-const gitmojiPath = path.join(
-  __dirname,
-  'gitmoji',
-  'src',
-  'data',
-  'gitmojis.json'
-)
-const gitmojis = require(gitmojiPath).gitmojis
-
-const unicodeEmojiPath = path.join(
-  __dirname,
-  'unicode-emoji-json',
-  'data-by-emoji.json'
-)
-const unicodeEmojiData = require(unicodeEmojiPath)
 const emojis = Object.keys(unicodeEmojiData)
 const emojiData = {}
 

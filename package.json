@@ -26,5 +26,9 @@
     "semi": false,
     "singleQuote": true,
     "trailingComma": "none"
+  },
+  "dependencies": {
+    "gitmojis": "^3.4.0",
+    "unicode-emoji-json": "^0.2.1"
   }
 }
