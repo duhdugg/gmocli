@@ -12,7 +12,6 @@ const gitmojiPath = path.join(
 )
 const gitmojis = require(gitmojiPath).gitmojis
 
-// const unicodeEmojiPath = ~/Projects/personal/emocli/unicode-emoji-json/data-by-emoji.json
 const unicodeEmojiPath = path.join(
   __dirname,
   'unicode-emoji-json',
