@@ -1,30 +1,30 @@
 # emocli
 
-emocli provides a command-line interface for searching emojis
+emocli provides a command-line interface for searching emojis.
+
+It uses combined data from [emocli/unicode-emoji-json](https://github.com/emocli/unicode-emoji-json) and [carloscuesta/gitmoji](https://github.com/carloscuesta/gitmoji).
+
+## Install
+
+`yarn global add https://github.com/duhdudgg/emocli`
 
 ## Usage
 
 ```text
-gitmocli [OPTIONS] <search>
+Usage:	gitmocli [OPTIONS] <search>
 
 OPTIONS:
--h      print this help
--l      list all emojis
--d      include data
+-h | --help 	print this help
+-l | --list 	list all emojis
+-i | --info 	include info
+-n | --name 	match name exactly
 ```
 
-## Install and Run
+### Example
 
-```bash
-git clone --recursive https://github.com/duhdugg/emocli.git
-cd ./emocli
-./emocli.js rocket
-```
+`emocli rocket`
 
-You may wish to symbolically link emocli.js to /usr/bin/emocli or somewhere
-similar within your `PATH`.
-
-> Output: 🚀
+> 🚀
 
 ## License
 
