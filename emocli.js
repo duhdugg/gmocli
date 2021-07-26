@@ -40,7 +40,7 @@ function printHelp() {
     '',
     'OPTIONS:',
     '-h | --help \t print this help',
-    '-l | --list \t list all emojis',
+    '-l | --list \t list all emoji characters',
     '-i | --info \t include info',
     '-n | --name \t match name exactly'
   ]
