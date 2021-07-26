@@ -29,7 +29,7 @@ yarn global add ~/.emocli
 ## Usage
 
 ```text
-Usage:	gitmocli [OPTIONS] <search>
+Usage:	emocli [OPTIONS] <search>
 
 OPTIONS:
 -h | --help 	print this help

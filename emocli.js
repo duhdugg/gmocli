@@ -28,7 +28,7 @@ for (const emoji of emojis) {
 
 function printHelp() {
   const lines = [
-    `Usage:\tgitmocli [OPTIONS] <search>`,
+    `Usage:\temocli [OPTIONS] <search>`,
     '',
     'OPTIONS:',
     '-h | --help \t print this help',
