@@ -6,11 +6,11 @@ It uses combined data from [muan/unicode-emoji-json](https://github.com/muan/uni
 
 ## Install
 
-`npm install -g emocli`
+`npm install -g @duhdugg/emocli`
 
 or
 
-`yarn global install emocli`
+`yarn global install @duhdugg/emocli`
 
 ## Usage
 
