@@ -2,7 +2,7 @@
 
 emocli provides a command-line interface for searching emoji characters.
 
-It uses combined data from [emocli/unicode-emoji-json](https://github.com/emocli/unicode-emoji-json) and [carloscuesta/gitmoji](https://github.com/carloscuesta/gitmoji).
+It uses combined data from [muan/unicode-emoji-json](https://github.com/muan/unicode-emoji-json) and [carloscuesta/gitmoji](https://github.com/carloscuesta/gitmoji).
 
 ## Install
 
