@@ -6,7 +6,25 @@ It uses combined data from [emocli/unicode-emoji-json](https://github.com/emocli
 
 ## Install
 
-`yarn global add https://github.com/duhdudgg/emocli`
+Requirements:
+
+- git
+- node
+- yarn
+
+```bash
+cd ~
+git clone --recurse-submodules https://github.com/duhdugg/emocli .emocli
+yarn global add ~/.emocli
+```
+
+to update:
+
+```bash
+cd ~/.emocli
+git pull --recurse-submodules
+yarn global add ~/.emocli
+```
 
 ## Usage
 
