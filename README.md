@@ -53,7 +53,7 @@ emocli -i dog
 🐕 dog
 🦮 guide dog
 🐕‍🦺 service dog
-🌭 hot do
+🌭 hot dog
 ```
 
 #### print a specific emoji by name
