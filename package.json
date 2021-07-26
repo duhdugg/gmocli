@@ -1,13 +1,12 @@
 {
   "name": "emocli",
-  "version": "1.0.0",
-  "description": "command line emoji tool",
+  "version": "0.1.0-alpha.0",
+  "description": "command line interface for emojis",
   "main": "emocli.js",
   "bin": "./emocli.js",
   "repository": "https://github.com/duhdugg/emocli/",
   "author": "Doug Elkin <doug@dougelkin.com>",
   "license": "MIT",
-  "private": true,
   "devDependencies": {
     "eslint": "^7.31.0",
     "eslint-config-prettier": "^8.3.0",
@@ -30,5 +29,8 @@
   "dependencies": {
     "gitmojis": "^3.4.0",
     "unicode-emoji-json": "^0.2.1"
+  },
+  "scripts": {
+    "emocli": "node emocli.js"
   }
 }
