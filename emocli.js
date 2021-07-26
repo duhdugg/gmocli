@@ -147,7 +147,9 @@ if (args.length < 3) {
         printEmoji(emoji, infoFlag)
       }
     } else {
-      process.exit(1)
+      if (!listFlag) {
+        process.exit(1)
+      }
     }
   }
 }
