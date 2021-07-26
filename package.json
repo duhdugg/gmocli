@@ -21,5 +21,10 @@
     "parserOptions": {
       "ecmaVersion": 2021
     }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none"
   }
 }
