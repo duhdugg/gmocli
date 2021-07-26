@@ -26,7 +26,12 @@ for (const emoji of emojis) {
     name: unicodeEmojiData[emoji].name
   }
   for (const gitmoji of gitmojis) {
-    if (emoji === gitmoji.emoji) {
+    // normalize mismatches of U+FE0F (VS16) characters
+    let gm = gitmoji.emoji
+    if (!emoji.match(/\ufe0f/)) {
+      gm = gitmoji.emoji.replace(/\ufe0f/g, '')
+    }
+    if (emoji === gm) {
       Object.assign(emojiData[emoji], {
         gitmojiDesc: gitmoji.description.toLowerCase()
       })
