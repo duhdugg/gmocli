@@ -26,7 +26,7 @@ OPTIONS:
 
 ### Examples
 
-#### list all emoji characters with their name / gitmoji description (if available)
+#### list all emoji characters with their name, info, and gitmoji description (if available)
 
 `emocli -li`
 
