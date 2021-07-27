@@ -35,11 +35,12 @@ OPTIONS:
 ```bash
 emocli -i dog
 # output
-🐶 dog face
-🐕 dog
-🦮 guide dog
-🐕‍🦺 service dog
-🌭 hot dog
+🐶 dog face | Animals & Nature / animal-mammal | dog,face,pet
+🐕 dog | Animals & Nature / animal-mammal | dog,pet
+🦮 guide dog | Animals & Nature / animal-mammal | accessibility,blind,guide,guide dog
+🐕‍🦺 service dog | Animals & Nature / animal-mammal | accessibility,assistance,dog,service
+🐩 poodle | Animals & Nature / animal-mammal | dog,poodle
+🌭 hot dog | Food & Drink / food-prepared | frankfurter,hot dog,hotdog,sausage
 ```
 
 #### print a specific emoji by name
@@ -54,7 +55,7 @@ emocli -n 'guide dog'
 
 #### use in a commit message
 
-`git commit -m "$(emocli rocket) production launch"`
+`git commit -m "$(emocli -n rocket) production launch"`
 
 #### use with rofi and xclip
 

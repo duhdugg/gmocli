@@ -1,17 +1,21 @@
 #!/usr/bin/env node
 
+const fs = require('fs')
 const path = require('path')
-const util = require('util')
+const zlib = require('zlib')
 const { gitmojis } = require('gitmojis/src/data/gitmojis.json')
-const unicodeEmojiData = require('unicode-emoji-json/data-by-emoji.json')
+const emojiData = JSON.parse(
+  zlib
+    .gunzipSync(fs.readFileSync(path.join(__dirname, 'data/emojis.json.gz')))
+    .toString()
+)
+const emojiDict = {}
+for (const data of emojiData) {
+  emojiDict[data.characters] = data
+}
+const emojiKeys = Object.keys(emojiDict)
 
-const emojis = Object.keys(unicodeEmojiData)
-const emojiData = {}
-
-for (const emoji of emojis) {
-  emojiData[emoji] = {
-    name: unicodeEmojiData[emoji].name
-  }
+for (const emoji of emojiKeys) {
   for (const gitmoji of gitmojis) {
     // normalize mismatches of U+FE0F (VS16) characters
     let gm = gitmoji.emoji
@@ -19,8 +23,8 @@ for (const emoji of emojis) {
       gm = gitmoji.emoji.replace(/\ufe0f/g, '')
     }
     if (emoji === gm) {
-      Object.assign(emojiData[emoji], {
-        gitmojiDesc: gitmoji.description.toLowerCase()
+      Object.assign(emojiDict[emoji], {
+        gitmoji_description: gitmoji.description
       })
     }
   }
@@ -41,17 +45,19 @@ function printHelp() {
 
 function printList(withInfo = false) {
   const lines = []
-  for (const emoji of emojis) {
+  for (const emoji of emojiKeys) {
     printEmoji(emoji, withInfo)
   }
 }
 
 function printEmoji(emoji, withInfo = false) {
   if (withInfo) {
-    const data = emojiData[emoji]
+    const data = emojiDict[emoji]
     console.log(
       emoji,
-      `${data.name}${data.gitmojiDesc ? ' / ' + data.gitmojiDesc : ''}`
+      `${data.name} | ${data.category_name} / ${data.subcategory_name} | ${
+        data.en_keywords ? `${data.en_keywords.join(',')}` : ''
+      }${data.gitmoji_description ? ' # ' + data.gitmoji_description : ''}`
     )
   } else {
     process.stdout.write(emoji)
@@ -63,23 +69,22 @@ function searchEmojis(searchKeys) {
   if (!searchKeys.length) {
     return matches
   }
-  for (let emoji of emojis) {
-    const data = emojiData[emoji]
+  for (let emoji of emojiKeys) {
+    const data = emojiDict[emoji]
+    const searchString = [
+      data.name,
+      data.cateory_name,
+      data.subcategory_name,
+      data.en_keywords.join(' '),
+      data.en_tts_description,
+      data.gitmoji_description
+    ].join(' ')
     let match = true
     // search name
     for (let searchKey of searchKeys) {
-      if (!data.name.toLowerCase().includes(searchKey.toLowerCase())) {
+      if (!searchString.match(new RegExp(searchKey, 'gi'))) {
         match = false
         break
-      }
-    }
-    if (!match && data.gitmojiDesc) {
-      match = true
-      for (let searchKey of searchKeys) {
-        if (!data.gitmojiDesc.toLowerCase().includes(searchKey.toLowerCase())) {
-          match = false
-          break
-        }
       }
     }
     if (match) {
@@ -91,8 +96,8 @@ function searchEmojis(searchKeys) {
 
 function getEmojiByName(name) {
   let match
-  for (let emoji of emojis) {
-    const data = emojiData[emoji]
+  for (let emoji of emojiKeys) {
+    const data = emojiDict[emoji]
     if (data.name === name) {
       match = emoji
       break
