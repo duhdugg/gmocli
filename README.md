@@ -72,7 +72,7 @@ emocli -li | rofi -dmenu -window-title emoji | cut -d' ' -f1 | tr -d '\n' | xcli
 
 ### my terminal is not displaying all emoji characters
 
-Your mileage may vary on terminal support for displaying emoji consisting of 2 characters joined by a zero-width joiner character (U+200D). The "service dog" emoji (🐕‍🦺) is one such example. Even with a proper font config, it will appear on many terminals as a dog next to a safety vest (🐕🦺).
+Your mileage may vary on terminal support for displaying emoji consisting of 2 or more characters joined by a zero-width joiner character (U+200D). The "service dog" emoji (🐕‍🦺) is one such example. Even with a proper font config, it will appear on many terminals as a dog next to a safety vest (🐕🦺).
 
 Currently, the best configuration tested with `emocli -li` is the [kitty](https://github.com/kovidgoyal/kitty) terminal with the [Noto Color Emoji](https://github.com/DeeDeeG/noto-color-emoji-font) font installed and configured in your fontconfig.
 
