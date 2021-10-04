@@ -28,7 +28,7 @@
     "trailingComma": "none"
   },
   "dependencies": {
-    "gitmojis": "^3.4.0"
+    "gitmojis": "^3.5.0"
   },
   "scripts": {
     "update-emoji-data": "bash scripts/update-emoji-data.sh",
