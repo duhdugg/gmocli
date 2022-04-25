@@ -73,7 +73,7 @@ function searchEmojis(searchKeys) {
     const data = emojiDict[emoji]
     const searchString = [
       data.name,
-      data.cateory_name,
+      data.category_name,
       data.subcategory_name,
       data.en_keywords.join(' '),
       data.en_tts_description,
