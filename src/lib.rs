@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
-const EMOJI_BYTES: &[u8] = include_bytes!("../data/emojis/emojis.json");
-const GITMOJI_BYTES: &[u8] = include_bytes!("../data/gitmojis/gitmojis.json");
+const EMOJI_BYTES: &[u8] = include_bytes!("../data/emoji/emoji.json");
+const GITMOJI_BYTES: &[u8] = include_bytes!("../data/gitmoji/gitmoji.json");
 type EmocliMap = HashMap<String, Emocli>;
 
 #[derive(Debug)]
