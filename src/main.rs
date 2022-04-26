@@ -78,6 +78,10 @@ fn print_help() {
         "-l | --list \t list all emoji characters",
         "-i | --info \t include info",
         "-n | --name \t match name exactly",
+        "",
+        "📝 Online help: <https://github.com/duhdugg/emocli/>",
+        "🐛 Issues: <https://github.com/duhdugg/emocli/issues>",
+        "✨ Pull Requests: <https://github.com/duhdugg/emocli/pulls>",
     ];
     println!("{}", lines.join("\n"));
 }
