@@ -1,6 +1,13 @@
 [package]
 name = "emocli"
-version = "0.1.0"
+description = "emocli provides a command-line interface for searching emoji characters."
+version = "0.8.0-alpha.0"
+authors = ["Doug Elkin <doug@dougelkin.com>"]
+readme = "README.md"
+repository = "https://github.com/duhdugg/emocli/"
+license = "MIT"
+keywords = ["emojis"]
+categories = ["command-line-utilities"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
