@@ -4,6 +4,8 @@ emocli provides a command-line interface for searching emoji characters.
 
 It uses combined data from [Mange/emoji-data](https://github.com/Mange/emoji-data) and [carloscuesta/gitmoji](https://github.com/carloscuesta/gitmoji).
 
+**Homepage:** https://github.com/duhdugg/emocli
+
 ## Usage
 
 ```text
@@ -72,4 +74,10 @@ Currently, the best configuration tested with `emocli -li` is the [kitty](https:
 
 This software is released under the MIT License. See `LICENSE` for details.
 
-This software includes source files from third party components, [Gitmoji](https://github.com/carloscuesta/gitmoji/) and [Unicode CLDR](https://cldr.unicode.org/). Each of these components have their own license. See `data/gitmojis/gitmojis-license.txt` and `data/emojis/unicode-license.txt`.
+This software includes source files from third party components, [Gitmoji](https://github.com/carloscuesta/gitmoji/) and [Unicode CLDR](https://cldr.unicode.org/). Each of these components have their own license. See `data/gitmoji/gitmoji-license.txt` and `data/emoji/unicode-license.txt`.
+
+## Contributing
+
+Pull requests are welcome at https://github.com/duhdugg/emocli/pulls
+
+Submit issues at https://github.com/duhdugg/emocli/issues
