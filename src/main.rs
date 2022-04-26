@@ -1,6 +1,9 @@
 use emocli::EmocliIndex;
 use std::env;
 
+const NAME: &str = env!("CARGO_PKG_NAME");
+const VERSION: &str = env!("CARGO_PKG_VERSION");
+
 fn main() {
     let args: Vec<String> = env::args().collect();
     if &args.len() < &2 {
@@ -11,6 +14,10 @@ fn main() {
     let mut list_flag = args.contains(&"-l".to_string()) || args.contains(&"--list".to_string());
     let mut info_flag = args.contains(&"-i".to_string()) || args.contains(&"--info".to_string());
     let mut name_flag = args.contains(&"-n".to_string()) || args.contains(&"--name".to_string());
+    let version_flag = args.contains(&"--version".to_string());
+    if version_flag {
+        print_version_and_exit();
+    }
     let dash = "-".to_string();
     for arg in &args {
         if arg[0..1] == dash && arg[1..2] != dash {
@@ -79,9 +86,16 @@ fn print_help() {
         "-i | --info \t include info",
         "-n | --name \t match name exactly",
         "",
+        "  --version \t print version and exit",
+        "",
         "📝 Online help: <https://github.com/duhdugg/emocli/>",
         "🐛 Issues: <https://github.com/duhdugg/emocli/issues>",
         "✨ Pull Requests: <https://github.com/duhdugg/emocli/pulls>",
     ];
     println!("{}", lines.join("\n"));
+}
+
+fn print_version_and_exit() {
+    println!("{} {}", NAME, VERSION);
+    std::process::exit(0);
 }

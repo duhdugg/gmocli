@@ -16,6 +16,8 @@ OPTIONS:
 -l | --list 	list all emoji characters
 -i | --info 	include info
 -n | --name 	match name exactly
+
+  --version 	print version and exit
 ```
 
 ### Examples
