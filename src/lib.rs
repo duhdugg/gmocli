@@ -6,13 +6,13 @@ type EmocliMap<'a> = HashMap<&'a str, Emocli<'a>>;
 
 #[derive(Debug)]
 pub struct Emocli<'a> {
-    emoji: &'a str,
-    name: &'a str,
-    category_name: &'a str,
-    subcategory_name: &'a str,
-    en_keywords: &'a str,
-    en_tts_description: &'a str,
-    gitmoji_description: &'a str,
+    pub emoji: &'a str,
+    pub name: &'a str,
+    pub category_name: &'a str,
+    pub subcategory_name: &'a str,
+    pub en_keywords: &'a str,
+    pub en_tts_description: &'a str,
+    pub gitmoji_description: &'a str,
 }
 
 impl<'a> Emocli<'a> {
@@ -42,7 +42,7 @@ impl<'a> Emocli<'a> {
 
 #[derive(Debug)]
 pub struct EmocliIndex<'a> {
-    ordering: Vec<&'a str>,
+    pub ordering: Vec<&'a str>,
     pub map: EmocliMap<'a>,
 }
 
