@@ -1,37 +1,36 @@
 use std::collections::HashMap;
 
-const EMOJI_BYTES: &[u8] = include_bytes!("../data/emoji/emoji.json");
-const GITMOJI_BYTES: &[u8] = include_bytes!("../data/gitmoji/gitmoji.json");
-type EmocliMap = HashMap<String, Emocli>;
+const EMOCLI_DATA: &[u8] = include_bytes!(concat!(env!("OUT_DIR"), "/data/emocli.tsv"));
+
+type EmocliMap<'a> = HashMap<&'a str, Emocli<'a>>;
 
 #[derive(Debug)]
-pub struct Emocli {
-    emoji: String,
-    name: String,
-    category_name: String,
-    subcategory_name: String,
-    en_keywords: Vec<String>,
-    en_tts_description: String,
-    gitmoji_description: Option<String>,
+pub struct Emocli<'a> {
+    emoji: &'a str,
+    name: &'a str,
+    category_name: &'a str,
+    subcategory_name: &'a str,
+    en_keywords: &'a str,
+    en_tts_description: &'a str,
+    gitmoji_description: &'a str,
 }
 
-impl Emocli {
+impl<'a> Emocli<'a> {
     pub fn print(&self, with_info: bool) {
         match with_info {
             true => {
-                let gitmoji_description = match self.gitmoji_description.as_ref() {
-                    None => "".to_string(),
-                    Some(gitmoji_description) => format!(" # {}", gitmoji_description),
-                };
-                let keywords: String = self.en_keywords.join(",");
+                let mut gitmoji_description = String::new();
+                if self.gitmoji_description.len() > 0 {
+                    gitmoji_description = format!(" # {}", self.gitmoji_description);
+                }
                 println!(
                     "{} {} | {} / {} | {}{}",
                     self.emoji,
                     self.name,
                     self.category_name,
                     self.subcategory_name,
-                    keywords,
-                    gitmoji_description,
+                    self.en_keywords,
+                    &gitmoji_description[..],
                 )
             }
             false => {
@@ -42,66 +41,53 @@ impl Emocli {
 }
 
 #[derive(Debug)]
-pub struct EmocliIndex {
-    ordering: Vec<String>,
-    pub map: EmocliMap,
+pub struct EmocliIndex<'a> {
+    ordering: Vec<&'a str>,
+    pub map: EmocliMap<'a>,
 }
 
-impl EmocliIndex {
-    pub fn get_emoji_by_name(&self, name: &str) -> Option<String> {
+impl<'a> EmocliIndex<'a> {
+    pub fn get_emoji_by_name(&self, name: &str) -> Option<&'a str> {
         let mut ret = None;
         for emoji in self.ordering.iter() {
             let emocli = self.map.get(emoji).unwrap();
             if emocli.name == name {
-                ret = Some(emoji.to_string());
+                ret = Some(&emoji[..]);
                 break;
             }
         }
         ret
     }
 
-    pub fn new() -> EmocliIndex {
-        let emojis_json = json::parse(std::str::from_utf8(EMOJI_BYTES).unwrap()).unwrap();
-        let gitmojis_json = json::parse(std::str::from_utf8(GITMOJI_BYTES).unwrap()).unwrap();
-        let mut ordering: Vec<String> = vec![];
+    pub fn new() -> EmocliIndex<'a> {
+        let mut ordering: Vec<&'a str> = vec![];
         let mut map: EmocliMap = EmocliMap::new();
+        let emocli_data = std::str::from_utf8(EMOCLI_DATA).unwrap();
 
-        if let json::JsonValue::Array(emojis) = emojis_json {
-            for emoji in emojis {
-                if let json::JsonValue::Object(e) = emoji {
-                    let characters = e.get("characters").unwrap().to_string();
-                    let name = e.get("name").unwrap().to_string();
-                    let category_name = e.get("category_name").unwrap().to_string();
-                    let subcategory_name = e.get("subcategory_name").unwrap().to_string();
-                    let en_tts_description = e.get("en_tts_description").unwrap().to_string();
-                    let en_keywords_value = e.get("en_keywords").unwrap();
-                    let mut en_keywords: Vec<String> = vec![];
-                    if let json::JsonValue::Array(en_keywords_value) = en_keywords_value {
-                        for keyword in en_keywords_value {
-                            en_keywords.push(keyword.to_string());
-                        }
-                    }
-                    let gitmoji_description = None;
-                    ordering.push(characters.to_string());
-                    map.insert(
-                        characters.to_string(),
-                        Emocli {
-                            emoji: characters,
-                            name,
-                            category_name,
-                            subcategory_name,
-                            en_keywords,
-                            en_tts_description,
-                            gitmoji_description,
-                        },
-                    );
-                }
-            }
+        for line in emocli_data.lines() {
+            let split_tabs: Vec<&str> = line.split("\t").collect();
+            let emoji = split_tabs[0];
+            let name = split_tabs[1];
+            let category_name = split_tabs[2];
+            let subcategory_name = split_tabs[3];
+            let en_tts_description = split_tabs[4];
+            let en_keywords = split_tabs[5];
+            let gitmoji_description = split_tabs[6];
+            ordering.push(emoji);
+            map.insert(
+                emoji,
+                Emocli {
+                    emoji,
+                    name,
+                    category_name,
+                    subcategory_name,
+                    en_keywords,
+                    en_tts_description,
+                    gitmoji_description,
+                },
+            );
         }
 
-        for (emoji, emocli) in map.iter_mut() {
-            emocli.gitmoji_description = get_gitmoji_description(&gitmojis_json, emoji.to_string());
-        }
         EmocliIndex { ordering, map }
     }
 
@@ -111,8 +97,8 @@ impl EmocliIndex {
         }
     }
 
-    pub fn search_emoclis(&self, search_keys: Vec<String>) -> Vec<String> {
-        let mut matches: Vec<String> = vec![];
+    pub fn search_emoclis(&self, search_keys: Vec<&str>) -> Vec<&'a str> {
+        let mut matches: Vec<&'a str> = vec![];
         if &search_keys.len() > &0 {
             for emoji in self.ordering.iter() {
                 let emocli = self.map.get(emoji).unwrap();
@@ -122,12 +108,9 @@ impl EmocliIndex {
                     emocli.name,
                     emocli.category_name,
                     emocli.subcategory_name,
-                    emocli.en_keywords.join(","),
+                    emocli.en_keywords,
                     emocli.en_tts_description,
-                    emocli
-                        .gitmoji_description
-                        .as_ref()
-                        .unwrap_or(&"".to_string()),
+                    emocli.gitmoji_description,
                 );
                 let mut has_match = false;
                 for search_key in &search_keys {
@@ -140,32 +123,10 @@ impl EmocliIndex {
                     }
                 }
                 if has_match {
-                    matches.push(emoji.to_string());
+                    matches.push(emoji);
                 }
             }
         }
         matches
     }
-}
-
-pub fn get_gitmoji_description(gitmojis_json: &json::JsonValue, emoji: String) -> Option<String> {
-    let mut gitmoji_description = None;
-    if let json::JsonValue::Object(gitmojis_object) = &gitmojis_json {
-        if let json::JsonValue::Array(gitmojis) = gitmojis_object.get("gitmojis").unwrap() {
-            for gitmoji in gitmojis {
-                if let json::JsonValue::Object(gitmoji) = gitmoji {
-                    let mut gm_emoji = gitmoji.get("emoji").unwrap().to_string();
-                    let vs16 = std::str::from_utf8(&[0xef, 0xb8, 0x8f]).unwrap();
-                    if !emoji.contains(vs16) {
-                        gm_emoji = gm_emoji.replace(vs16, "");
-                    }
-                    if emoji == gm_emoji {
-                        let gmd = gitmoji.get("description").unwrap().to_string();
-                        gitmoji_description = Some(gmd);
-                    }
-                }
-            }
-        }
-    }
-    gitmoji_description
 }

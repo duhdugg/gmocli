@@ -18,9 +18,9 @@ fn main() {
     if version_flag {
         print_version_and_exit();
     }
-    let dash = "-".to_string();
+    let dash = "-";
     for arg in &args {
-        if arg[0..1] == dash && arg[1..2] != dash {
+        if &arg[0..1] == dash && &arg[1..2] != dash {
             if arg.contains('h') {
                 help_flag = true;
             }
@@ -43,10 +43,10 @@ fn main() {
         emocli_index.print_list(info_flag);
     }
 
-    let mut search_keys: Vec<String> = vec![];
+    let mut search_keys: Vec<&str> = vec![];
     for arg in &args[1..] {
         if !arg.starts_with('-') {
-            search_keys.push(arg.to_string());
+            search_keys.push(arg);
         }
     }
 
