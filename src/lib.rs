@@ -82,7 +82,6 @@ impl EmocliIndex {
                         }
                     }
                     let gitmoji_description = None;
-                    // get_gitmoji_description(&gitmojis_json, characters.to_string());
                     ordering.push(characters.to_string());
                     map.insert(
                         characters.to_string(),
