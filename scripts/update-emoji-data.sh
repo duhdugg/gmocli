@@ -4,7 +4,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 cd $SCRIPT_DIR/..
 
 EMOJI_DATA_VERSION="2.4"
-GITMOJI_VERSION="3.12.0"
+GITMOJI_VERSION="3.13.0"
 EMOJI_URL="https://github.com/Mange/emoji-data/releases/download/v$EMOJI_DATA_VERSION/prebuilt-data-v$EMOJI_DATA_VERSION.tar.bz2"
 GITMOJI_URL="https://github.com/carloscuesta/gitmoji/archive/refs/tags/v$GITMOJI_VERSION.tar.gz"
 
