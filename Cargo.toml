@@ -1,7 +1,7 @@
 [package]
 name = "emocli"
 description = "emocli provides a command-line interface for searching emoji characters."
-version = "0.8.4"
+version = "0.8.5"
 authors = ["Doug Elkin <doug@dougelkin.com>"]
 readme = "README.md"
 repository = "https://github.com/duhdugg/emocli/"
