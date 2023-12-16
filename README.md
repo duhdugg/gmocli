@@ -1,15 +1,16 @@
-# emocli
+# gmocli
 
-emocli provides a command-line interface for searching emoji characters.
+gmocli provides a command-line interface for searching emoji characters with
+associated gitmoji descriptions.
 
 It uses combined data from [Mange/emoji-data](https://github.com/Mange/emoji-data) and [carloscuesta/gitmoji](https://github.com/carloscuesta/gitmoji).
 
-**Homepage:** https://github.com/duhdugg/emocli
+**Homepage:** https://github.com/duhdugg/gmocli
 
 ## Usage
 
 ```text
-Usage:	emocli [OPTIONS] <search>
+Usage:	gmocli [OPTIONS] <search>
 
 OPTIONS:
 -h | --help 	print this help
@@ -24,12 +25,12 @@ OPTIONS:
 
 #### list all emoji characters with their name, info, and gitmoji description (if available)
 
-`emocli -li`
+`gmocli -li`
 
 #### search for an emoji using keywords
 
 ```bash
-emocli -i dog
+gmocli -i dog
 # output
 🐶 dog face | Animals & Nature / animal-mammal | dog,face,pet
 🐕 dog | Animals & Nature / animal-mammal | dog,pet
@@ -44,14 +45,14 @@ emocli -i dog
 if the name is more than one word, it should be enclosed in quotes
 
 ```bash
-emocli -n 'guide dog'
+gmocli -n 'guide dog'
 # output
 🦮
 ```
 
 #### use in a commit message
 
-`git commit -m "$(emocli -n rocket) production launch"`
+`git commit -m "$(gmocli -n rocket) production launch"`
 
 #### use with rofi and xclip
 
@@ -61,7 +62,7 @@ emocli -n 'guide dog'
 
 ```bash
 # put this somewhere as a script in your PATH, shell alias, or keyboard shortcut
-emocli -li | rofi -dmenu -window-title emoji | cut -d' ' -f1 | tr -d '\n' | xclip -selection clipboard
+gmocli -li | rofi -dmenu -window-title emoji | cut -d' ' -f1 | tr -d '\n' | xclip -selection clipboard
 ```
 
 ## Troubleshooting
@@ -70,7 +71,7 @@ emocli -li | rofi -dmenu -window-title emoji | cut -d' ' -f1 | tr -d '\n' | xcli
 
 Your mileage may vary on terminal support for displaying emoji consisting of 2 or more characters joined by a zero-width joiner character (U+200D). The "service dog" emoji (🐕‍🦺) is one such example. Even with a proper font config, it will appear on many terminals as a dog next to a safety vest (🐕🦺).
 
-Currently, the best configuration tested with `emocli -li` is the [wezterm](https://github.com/wez/wezterm) terminal with the [Noto Color Emoji](https://github.com/DeeDeeG/noto-color-emoji-font) font installed and configured in your fontconfig. [kitty](https://github.com/kovidgoyal/kitty) also works well.
+Currently, the best configuration tested with `gmocli -li` is the [wezterm](https://github.com/wez/wezterm) terminal with the [Noto Color Emoji](https://github.com/DeeDeeG/noto-color-emoji-font) font installed and configured in your fontconfig. [kitty](https://github.com/kovidgoyal/kitty) also works well.
 
 ## License
 
@@ -80,6 +81,6 @@ This software includes source files from third party components, [Gitmoji](https
 
 ## Contributing
 
-Pull requests are welcome at https://github.com/duhdugg/emocli/pulls
+Pull requests are welcome at https://github.com/duhdugg/gmocli/pulls
 
-Submit issues at https://github.com/duhdugg/emocli/issues
+Submit issues at https://github.com/duhdugg/gmocli/issues

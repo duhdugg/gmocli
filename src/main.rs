@@ -1,4 +1,4 @@
-use emocli::EmocliIndex;
+use gmocli::GmocliIndex;
 use std::env;
 
 const NAME: &str = env!("CARGO_PKG_NAME");
@@ -38,9 +38,9 @@ fn main() {
     if help_flag {
         print_help();
     }
-    let emocli_index = EmocliIndex::new();
+    let gmocli_index = GmocliIndex::new();
     if list_flag {
-        emocli_index.print_list(info_flag);
+        gmocli_index.print_list(info_flag);
     }
 
     let mut search_keys: Vec<&str> = vec![];
@@ -51,22 +51,22 @@ fn main() {
     }
 
     if name_flag {
-        let emoji_result = emocli_index.get_emoji_by_name(search_keys.join(" ").as_str());
+        let emoji_result = gmocli_index.get_emoji_by_name(search_keys.join(" ").as_str());
         match emoji_result {
             Some(emoji) => {
-                let emocli = emocli_index.map.get(&emoji).unwrap();
-                emocli.print(info_flag);
+                let gmocli = gmocli_index.map.get(&emoji).unwrap();
+                gmocli.print(info_flag);
             }
             None => {
                 std::process::exit(1);
             }
         }
     } else {
-        let emoji_matches = emocli_index.search_emoclis(search_keys);
+        let emoji_matches = gmocli_index.search_gmoclis(search_keys);
         if emoji_matches.len() > 0 {
             for emoji in emoji_matches {
-                let emocli = emocli_index.map.get(&emoji).unwrap();
-                emocli.print(info_flag);
+                let gmocli = gmocli_index.map.get(&emoji).unwrap();
+                gmocli.print(info_flag);
             }
         } else {
             if !list_flag {
@@ -78,7 +78,7 @@ fn main() {
 
 fn print_help() {
     let lines = vec![
-        "Usage:\temocli [OPTIONS] <search>",
+        "Usage:\tgmocli [OPTIONS] <search>",
         "",
         "OPTIONS:",
         "-h | --help \t print this help",
@@ -88,9 +88,9 @@ fn print_help() {
         "",
         "  --version \t print version and exit",
         "",
-        "📝 Online help: <https://github.com/duhdugg/emocli/>",
-        "🐛 Issues: <https://github.com/duhdugg/emocli/issues>",
-        "✨ Pull Requests: <https://github.com/duhdugg/emocli/pulls>",
+        "📝 Online help: <https://github.com/duhdugg/gmocli/>",
+        "🐛 Issues: <https://github.com/duhdugg/gmocli/issues>",
+        "✨ Pull Requests: <https://github.com/duhdugg/gmocli/pulls>",
     ];
     println!("{}", lines.join("\n"));
 }

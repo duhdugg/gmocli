@@ -1,10 +1,10 @@
 [package]
-name = "emocli"
-description = "emocli provides a command-line interface for searching emoji characters."
-version = "0.8.6"
+name = "gmocli"
+description = "gmocli provides a command-line interface for searching emoji characters with associated gitmoji descriptions."
+version = "1.0.0-alpha.1"
 authors = ["Doug Elkin <doug@dougelkin.com>"]
 readme = "README.md"
-repository = "https://github.com/duhdugg/emocli/"
+repository = "https://github.com/duhdugg/gmocli/"
 license = "MIT"
 keywords = ["emojis"]
 categories = ["command-line-utilities"]

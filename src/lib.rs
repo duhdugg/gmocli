@@ -1,11 +1,11 @@
 use std::collections::HashMap;
 
-const EMOCLI_DATA: &[u8] = include_bytes!(concat!(env!("OUT_DIR"), "/data/emocli.tsv"));
+const GMOCLI_DATA: &[u8] = include_bytes!(concat!(env!("OUT_DIR"), "/data/gmocli.tsv"));
 
-type EmocliMap<'a> = HashMap<&'a str, Emocli<'a>>;
+type GmocliMap<'a> = HashMap<&'a str, Gmocli<'a>>;
 
 #[derive(Debug)]
-pub struct Emocli<'a> {
+pub struct Gmocli<'a> {
     pub emoji: &'a str,
     pub name: &'a str,
     pub category_name: &'a str,
@@ -15,7 +15,7 @@ pub struct Emocli<'a> {
     pub gitmoji_description: &'a str,
 }
 
-impl<'a> Emocli<'a> {
+impl<'a> Gmocli<'a> {
     pub fn print(&self, with_info: bool) {
         match with_info {
             true => {
@@ -41,17 +41,17 @@ impl<'a> Emocli<'a> {
 }
 
 #[derive(Debug)]
-pub struct EmocliIndex<'a> {
+pub struct GmocliIndex<'a> {
     pub ordering: Vec<&'a str>,
-    pub map: EmocliMap<'a>,
+    pub map: GmocliMap<'a>,
 }
 
-impl<'a> EmocliIndex<'a> {
+impl<'a> GmocliIndex<'a> {
     pub fn get_emoji_by_name(&self, name: &str) -> Option<&'a str> {
         let mut ret = None;
         for emoji in self.ordering.iter() {
-            let emocli = self.map.get(emoji).unwrap();
-            if emocli.name == name {
+            let gmocli = self.map.get(emoji).unwrap();
+            if gmocli.name == name {
                 ret = Some(&emoji[..]);
                 break;
             }
@@ -59,12 +59,12 @@ impl<'a> EmocliIndex<'a> {
         ret
     }
 
-    pub fn new() -> EmocliIndex<'a> {
+    pub fn new() -> GmocliIndex<'a> {
         let mut ordering: Vec<&'a str> = vec![];
-        let mut map: EmocliMap = EmocliMap::new();
-        let emocli_data = std::str::from_utf8(EMOCLI_DATA).unwrap();
+        let mut map: GmocliMap = GmocliMap::new();
+        let gmocli_data = std::str::from_utf8(GMOCLI_DATA).unwrap();
 
-        for line in emocli_data.lines() {
+        for line in gmocli_data.lines() {
             let split_tabs: Vec<&str> = line.split("\t").collect();
             let emoji = split_tabs[0];
             let name = split_tabs[1];
@@ -76,7 +76,7 @@ impl<'a> EmocliIndex<'a> {
             ordering.push(emoji);
             map.insert(
                 emoji,
-                Emocli {
+                Gmocli {
                     emoji,
                     name,
                     category_name,
@@ -88,7 +88,7 @@ impl<'a> EmocliIndex<'a> {
             );
         }
 
-        EmocliIndex { ordering, map }
+        GmocliIndex { ordering, map }
     }
 
     pub fn print_list(&self, with_info: bool) {
@@ -97,20 +97,20 @@ impl<'a> EmocliIndex<'a> {
         }
     }
 
-    pub fn search_emoclis(&self, search_keys: Vec<&str>) -> Vec<&'a str> {
+    pub fn search_gmoclis(&self, search_keys: Vec<&str>) -> Vec<&'a str> {
         let mut matches: Vec<&'a str> = vec![];
         if &search_keys.len() > &0 {
             for emoji in self.ordering.iter() {
-                let emocli = self.map.get(emoji).unwrap();
+                let gmocli = self.map.get(emoji).unwrap();
                 let search_string = format!(
                     "{} {} {} {} {} {} {}",
-                    emocli.emoji,
-                    emocli.name,
-                    emocli.category_name,
-                    emocli.subcategory_name,
-                    emocli.en_keywords,
-                    emocli.en_tts_description,
-                    emocli.gitmoji_description,
+                    gmocli.emoji,
+                    gmocli.name,
+                    gmocli.category_name,
+                    gmocli.subcategory_name,
+                    gmocli.en_keywords,
+                    gmocli.en_tts_description,
+                    gmocli.gitmoji_description,
                 );
                 let mut has_match = false;
                 for search_key in &search_keys {
