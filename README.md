@@ -54,15 +54,13 @@ gmocli -n 'guide dog'
 
 `git commit -m "$(gmocli -n rocket) production launch"`
 
-#### use with rofi and xclip
+#### use with dmenu, fzf, or rofi
 
-[rofi](https://github.com/davatorium/rofi) is a window switcher, application launcher, and dmenu replacement. Here, it is being used as a dmenu replacement to provide a graphical interface for search and select.
-
-[xclip](https://github.com/astrand/xclip) is a command line utility that provides an interface to the X11 clipboard. Here, it is being used to copy its standard input into the clipboard.
+For interactive searching, you can pipe the output of `gmocli -li` to something
+like dmenu, fzf, or rofi as follows:
 
 ```bash
-# put this somewhere as a script in your PATH, shell alias, or keyboard shortcut
-gmocli -li | rofi -dmenu -window-title emoji | cut -d' ' -f1 | tr -d '\n' | xclip -selection clipboard
+gmocli -li | fzf | cut -d' ' -f1 | tr -d '\n'  # | xclip or whatever
 ```
 
 ## Troubleshooting
