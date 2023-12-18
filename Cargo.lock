@@ -4,7 +4,7 @@ version = 3
 
 [[package]]
 name = "gmocli"
-version = "1.0.0-alpha.1"
+version = "1.0.0"
 dependencies = [
  "json",
 ]
