@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 
+set -euxo pipefail
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 cd $SCRIPT_DIR/..
 
-EMOJI_DATA_VERSION="2.5"
+EMOJI_DATA_VERSION="2.6"
 GITMOJI_VERSION="3.14.0"
-EMOJI_URL="https://github.com/Mange/emoji-data/releases/download/v$EMOJI_DATA_VERSION/prebuilt-data-v$EMOJI_DATA_VERSION.tar.bz2"
+EMOJI_URL="https://github.com/Mange/emoji-data/releases/download/v$EMOJI_DATA_VERSION/prebuild-data-v$EMOJI_DATA_VERSION.tar.bz2"
 GITMOJI_URL="https://github.com/carloscuesta/gitmoji/archive/refs/tags/v$GITMOJI_VERSION.tar.gz"
 
 mkdir -p data/emoji data/gitmoji dev/emoji-data-dist dev/gitmoji
 
 cd dev/emoji-data-dist
 curl -L "$EMOJI_URL" > prebuilt-data.tar.bz2
-tar -xf prebuilt-data.tar.bz2
+tar -xvaf prebuilt-data.tar.bz2
 cat data/all_emojis.json | jq -c  > ../../data/emoji/emoji.json
 
 cd ../gitmoji
