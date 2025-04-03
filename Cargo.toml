@@ -1,7 +1,7 @@
 [package]
 name = "gmocli"
 description = "gmocli provides a command-line interface for searching emoji characters with associated gitmoji descriptions."
-version = "1.1.0"
+version = "1.2.0"
 authors = ["Doug Elkin <doug@dougelkin.com>"]
 readme = "README.md"
 repository = "https://github.com/duhdugg/gmocli/"
