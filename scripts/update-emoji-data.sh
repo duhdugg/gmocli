@@ -5,9 +5,9 @@ set -euxo pipefail
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 cd $SCRIPT_DIR/..
 
-EMOJI_DATA_VERSION="2.7-prerelease-pr-31"
+EMOJI_DATA_VERSION="2.7"
 GITMOJI_VERSION="3.15.0"
-EMOJI_URL="https://github.com/duhdugg/emoji-data/releases/download/v$EMOJI_DATA_VERSION/prebuilt-data-v$EMOJI_DATA_VERSION.tar.bz2"
+EMOJI_URL="https://github.com/Mange/emoji-data/releases/download/v$EMOJI_DATA_VERSION/prebuilt-data-v$EMOJI_DATA_VERSION.tar.bz2"
 GITMOJI_URL="https://github.com/carloscuesta/gitmoji/archive/refs/tags/v$GITMOJI_VERSION.tar.gz"
 
 mkdir -p data/emoji data/gitmoji dev/emoji-data-dist dev/gitmoji
